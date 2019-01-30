@@ -45,20 +45,14 @@ interface Planets {
 })
 export class PlanetsService {
     planetsURL = 'https://swapi.co/api/planets/';
-    
-    speciesURL = 'http://localhost:3000/species';
-    charactersURL = 'http://localhost:3000/characters';
     queryURL = '?q=';
 
     constructor(private http: HttpClient) { }
 
 
-getPlanets() {
-    return this.http.get<Planets>(this.planetsURL)       
-        .pipe(
-            retry(3),
-            catchError(err => throwError(new Error(err))),
-        )
-}
+    getPlanets(url: string = this.planetsURL) {
+        return this.http.get<Planets>(url)
+    }
+
 
 }

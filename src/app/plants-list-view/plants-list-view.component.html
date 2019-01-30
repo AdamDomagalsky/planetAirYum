@@ -9,8 +9,15 @@
     [length]="length"
     [pageSize]="pageSize"
     [pageSizeOptions]="pageSizeOptions"
-    (click)="setPage(pager.currentPage - 1)"
-    (page)="pageEvent = $event"
+    (page)="onPaginateChange($event)">
   >
   </mat-paginator>
+
+  <button (click)="increment()">Increment</button>
+ 
+<div>Current Count: {{ count$ | async }}</div>
+
+<button (click)="decrement()">Decrement</button>
+
+<button (click)="reset()">Reset Counter</button>
 </div>
