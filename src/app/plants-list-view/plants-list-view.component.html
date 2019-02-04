@@ -1,5 +1,20 @@
 <div>
-  <mat-list #shoes>
+    <mat-toolbar>  
+        <mat-toolbar-row>
+          <span>planetAirYum</span>
+        </mat-toolbar-row>
+
+
+    </mat-toolbar>
+
+
+    <div>
+        <mat-form-field class="example-form-field">
+            <input #searchInput matInput type="text" placeholder="Search..." (keyup)="searchTerm.next($event.target.value)" >
+          </mat-form-field>
+    </div>
+
+  <mat-list #planets>
     <mat-list-item *ngFor="let planet of pagedItems">
       {{ planet.name }}
     </mat-list-item>

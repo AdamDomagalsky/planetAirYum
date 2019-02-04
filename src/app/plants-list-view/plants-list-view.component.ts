@@ -3,7 +3,10 @@ import { PageEvent } from "@angular/material";
 
 import { PaginatorService, Paginating } from "../services/paginator.service";
 import { PlanetsService, Planet } from "../services/planets.service";
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+
+import { debounceTime, distinctUntilChanged, map, subscribeOn } from 'rxjs/operators';
+
 import { Increment, Decrement, Reset } from '../actions/counter.actions';
 import { FETCH_NEXT_PLANETS_REQUEST } from '../actions/planetsList.actions';
 
@@ -15,8 +18,8 @@ import { Store, select } from '@ngrx/store';
 })
 export class PlantsListViewComponent implements OnInit {
   private allItems: Array<Planet>;
-  pager: Paginating;
   pagedItems: Array<Planet>;
+  pager: Paginating;
   error: any;
   previous: string = null
   next: string = null
@@ -27,12 +30,11 @@ export class PlantsListViewComponent implements OnInit {
 
   // MatPaginator Output
   pageEvent: PageEvent;
-  // setPageSizeOptions(setPageSizeOptionsInput: string) {
-  //   console.log(setPageSizeOptionsInput);
-  //   this.pageSizeOptions = setPageSizeOptionsInput.split(",aaa").map(str => +str);
-  // }
   count$: Observable<number>;
   planetStorage$: Observable<any>;
+
+  searchTerm: Subject<string> = new Subject<string>();
+  value: boolean = false;
 
 
   constructor(
@@ -42,20 +44,26 @@ export class PlantsListViewComponent implements OnInit {
   ) {
     this.pager = <Paginating>{};
     this.count$ = store.pipe(select('counter'));
+    this.value;
+
+    // this.searchTerm.subscribe( tekst => console.log(tekst))
+
+    this.searchTerm.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+    ).subscribe(term => this.searchPlanet(term))
 
     store.pipe(select('planetStorage'))
       .subscribe( pS => {
-                console.log(pS);
-        this.allItems = pS.planetList
-        this.length = pS.count;
-        this.previous = pS.previous
-        this.next = pS.next
-        this.setPage();
         if (pS.next) {
           this.store.dispatch(new FETCH_NEXT_PLANETS_REQUEST(pS.next)) // cacheing next planets
         }
+        this.allItems = pS.planetList
+        this.length = pS.count
+        this.previous = pS.previous
+        this.next = pS.next
+        this.setPage();
       });
-
   }
 
   onPaginateChange(event){
@@ -63,6 +71,25 @@ export class PlantsListViewComponent implements OnInit {
   }
 
   ngOnInit() { }
+
+  searchPlanet(term: any) {
+    if (term.length > 0) {
+      let result = this.allItems.filter(element => element.name.toLocaleLowerCase().includes(term))
+      this.setPage(result)
+      this.length = result.length
+      this.value = true
+    } else {
+      this.clearSearch()
+    }
+    
+  }
+
+  clearSearch(){
+    this.length = this.allItems.length
+    this.value = false
+    this.setPage(this.allItems)
+    console.log('czysci')
+  }
 
   increment() {
     this.store.dispatch(new Increment());
@@ -76,12 +103,13 @@ export class PlantsListViewComponent implements OnInit {
     this.store.dispatch(new Reset());
   }
 
-  setPage(page: number = 1, pageSize: number = this.pageSizeOptions[0]) {
+  setPage(ItemsArr: Array<Planet>= this.allItems, page: number = 1, pageSize: number = this.pageSizeOptions[0]) {
     if (page < 1 || page > this.pager.totalPages + 1) {
       return;
     }
+
     this.pager = this.paginator.getPager(this.length, page, pageSize);
-    this.pagedItems = this.allItems.slice(
+    this.pagedItems = ItemsArr.slice(
       this.pager.startIndex,
       this.pager.endIndex + 1
     );

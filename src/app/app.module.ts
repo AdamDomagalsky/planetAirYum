@@ -19,7 +19,11 @@ import { PlantsListViewComponent } from "./plants-list-view/plants-list-view.com
 import {
   MatToolbarModule,
   MatPaginatorModule,
-  MatListModule
+  MatListModule,
+  MatIconModule,
+  MatInputModule,
+  MatButtonModule,
+  MatButtonToggleModule,
 } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
@@ -34,9 +38,13 @@ import { PlantsListResolver } from "./resolvers/plantsList.resolver";
     MatToolbarModule,
     MatPaginatorModule,
     MatListModule,
+    MatIconModule,
+    MatInputModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    MatButtonModule,
+    MatButtonToggleModule,
     EffectsModule.forRoot([PlanetsListEffects]), // it must be b4 StoreModule.forRoot(...)
     StoreModule.forRoot(reducers), // combined routers
     // Instrumentation must be imported after importing StoreModule (config is optional)
