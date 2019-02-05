@@ -24,15 +24,17 @@ import {
   MatInputModule,
   MatButtonModule,
   MatButtonToggleModule,
+  MatTableModule,
 } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { PaginatorService } from "./services/paginator.service";
 import { PlanetsService } from "./services/planets.service";
 import { PlantsListResolver } from "./resolvers/plantsList.resolver";
+import { PlanetDetailComponent } from './planet-detail/planet-detail.component';
 
 @NgModule({
-  declarations: [AppComponent, PlantsListViewComponent],
+  declarations: [AppComponent, PlantsListViewComponent, PlanetDetailComponent],
   imports: [
     BrowserAnimationsModule,
     MatToolbarModule,
@@ -43,6 +45,7 @@ import { PlantsListResolver } from "./resolvers/plantsList.resolver";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    MatTableModule,
     MatButtonModule,
     MatButtonToggleModule,
     EffectsModule.forRoot([PlanetsListEffects]), // it must be b4 StoreModule.forRoot(...)

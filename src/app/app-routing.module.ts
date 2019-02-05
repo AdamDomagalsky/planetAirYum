@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PlantsListViewComponent } from './plants-list-view/plants-list-view.component'
 import { PlantsListResolver } from "./resolvers/plantsList.resolver";
+import { PlanetDetailComponent } from './planet-detail/planet-detail.component'
+
 
 const routes: Routes = [
   {
@@ -10,6 +12,7 @@ const routes: Routes = [
     component: PlantsListViewComponent,
     resolve: {PlantsListResolver} // to fetch on route enter
   },
+  { path: 'planets/:id', component: PlanetDetailComponent },
 ];
 
 @NgModule({

@@ -1,0 +1,40 @@
+.header {
+  position: fixed;
+  top: 0px;
+  z-index: 2;
+  height: 64px;
+  width: 100%;
+}
+
+.searchBar {
+  margin-left: 25px;
+  align-items: flex-end;
+}
+
+.main-container {
+    /* background-color: linen; */
+    margin-top: 64px;
+    margin-bottom: 56px;
+}
+
+.mat-row:hover {
+  background-color: lightblue;
+  cursor: pointer;
+}
+.content {
+    max-width: 800px;
+    /* background-color: lightgray;    */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Structure */
+table {
+  width: 100%;
+
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
