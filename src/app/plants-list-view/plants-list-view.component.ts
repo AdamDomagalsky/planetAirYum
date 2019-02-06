@@ -62,12 +62,14 @@ export class PlantsListViewComponent implements OnInit {
   searchPlanet(term: any) {
     if (term.length > 0) {
       this.dataSource.filter = term.trim().toLowerCase();
+    } else {
+      this.initList();
     }
   }
 
   initList() {
     this.store.pipe(select("planetStorage")).subscribe(pS => {
-      if (pS.next) {
+      if (pS.planetList.length !== pS.count && pS.next) {
         this.store.dispatch(new FETCH_NEXT_PLANETS_REQUEST(pS.next)); // cacheing next planets
       }
       this.isLoading = false
