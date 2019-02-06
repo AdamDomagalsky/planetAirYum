@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { SelectionModel } from "@angular/cdk/collections";
 
 import { MatPaginator, MatTableDataSource } from "@angular/material";
 
@@ -30,11 +29,8 @@ export class PlantsListViewComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   dataSource: MatTableDataSource<Planet>;
-  selection = new SelectionModel<Planet>(false, []);
-
-  error: any;
   next: string = null;
-
+  isLoading = true;
   searchTerm: Subject<string> = new Subject<string>();
 
   constructor(private store: Store<any>, private router: Router) {
@@ -74,6 +70,7 @@ export class PlantsListViewComponent implements OnInit {
       if (pS.next) {
         this.store.dispatch(new FETCH_NEXT_PLANETS_REQUEST(pS.next)); // cacheing next planets
       }
+      this.isLoading = false
       this.dataSource = new MatTableDataSource<Planet>(pS.planetList);
       this.dataSource.paginator = this.paginator;
     });

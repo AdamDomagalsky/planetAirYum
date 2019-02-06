@@ -10,7 +10,8 @@
     </mat-toolbar>
   </div>
   <div class="main-container">
-    <div class="content">
+    <mat-spinner  class="content" *ngIf="isLoading"></mat-spinner>
+    <div class="content" *ngIf="!isLoading">
       <mat-form-field>
         <input
           matInput
