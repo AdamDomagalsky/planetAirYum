@@ -1,0 +1,24 @@
+ 
+  .main-container {
+    position: relative;
+    float: left;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 1%);
+
+  }
+
+  .content {
+      max-width: 600px;
+  }
+
+  .icon {
+    display: inline-flex;
+    vertical-align: middle;
+  }
+
+  
+  .example-header-image {
+    background-image: url('https://png.pngtree.com/element_origin_min_pic/17/09/25/8cb99d887649e55f5d651819be920caa.jpg');
+    background-size: cover;
+  }

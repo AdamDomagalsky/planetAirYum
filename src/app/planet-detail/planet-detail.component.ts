@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from "@angular/router";
+import { Store, select } from "@ngrx/store";
+import { getPlanetItemById } from "../selectors/getPlanetById.selector";
+import { Planet } from '../services/planets.service';
 
 @Component({
   selector: 'app-planet-detail',
@@ -7,9 +11,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlanetDetailComponent implements OnInit {
 
-  constructor() { }
+  isLoading = true;
+  planetDetail: Planet;
+  
+  constructor(private router: Router, private store: Store<any>) {
 
-  ngOnInit() {
-  }
+    this.store.select(getPlanetItemById(this.router.url)).subscribe(planet => {
+      if(planet){
+        this.isLoading = false;
+        this.planetDetail = planet
+      }
+    })
+
+   }
+
+  ngOnInit() {}
 
 }

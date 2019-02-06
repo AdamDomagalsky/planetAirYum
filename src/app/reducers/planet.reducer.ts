@@ -2,7 +2,8 @@ import {
   PlanetsListActionTypes,
   PlanetsListActionsUnion
 } from "../actions/planetsList.actions";
-// import { initialState } from "./state";
+
+
 
 const initialState = {
   planetList: [],
@@ -10,6 +11,7 @@ const initialState = {
   next: null,
   previous: null
 };
+
 
 export function planetReducer(
   state = initialState,
@@ -34,10 +36,12 @@ export function planetReducer(
     case PlanetsListActionTypes.FETCH_NEXT_PLANETS_SUCCESS: {
       return {
         ...state,
-        planetList: [...state.planetList,...action.payload["results"]],
+        planetList: [...state.planetList, ...action.payload["results"]],
         ...action.payload
       };
     }
+
+
 
     default:
       return state;

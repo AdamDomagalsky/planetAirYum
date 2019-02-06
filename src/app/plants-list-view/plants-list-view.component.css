@@ -6,24 +6,17 @@
   width: 100%;
 }
 
-.searchBar {
-  margin-left: 25px;
-  align-items: flex-end;
-}
-
 .main-container {
-    /* background-color: linen; */
     margin-top: 64px;
-    margin-bottom: 56px;
 }
 
 .mat-row:hover {
   background-color: lightblue;
   cursor: pointer;
 }
+
 .content {
     max-width: 800px;
-    /* background-color: lightgray;    */
     margin-left: auto;
     margin-right: auto;
 }

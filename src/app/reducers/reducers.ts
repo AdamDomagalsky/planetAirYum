@@ -1,7 +1,7 @@
 import { planetReducer } from "./planet.reducer";
-import { counterReducer } from "./counter.reducer";
+import { planetDetailReducer } from "./planetDetail.reducer";
 
 export const reducers = {
-    counter: counterReducer,
+    planetDetail: planetDetailReducer,
     planetStorage: planetReducer,
   };

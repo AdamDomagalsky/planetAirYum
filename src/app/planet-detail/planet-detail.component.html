@@ -1,3 +1,54 @@
-<p>
-  planet-detail works!
-</p>
+<div class="main-container">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <mat-card class="content" *ngIf="!isLoading">
+    <mat-card-actions>
+      <button mat-icon-button color="primary" routerLink="/">
+        <mat-icon aria-label="Example icon-button with a heart icon"
+          >keyboard_backspace</mat-icon
+        >Go Back
+      </button>
+    </mat-card-actions>
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{ planetDetail.name }}</mat-card-title>
+      <mat-card-subtitle>Population: {{ planetDetail.population }} <mat-icon class="icon" >people</mat-icon></mat-card-subtitle>
+    </mat-card-header>
+    <img
+      mat-card-image
+      src="https://esotericastrologyblog.files.wordpress.com/2014/10/iceland-2.jpg"
+      alt="Photo of a Planet surface"
+    />
+    <br />
+    <mat-accordion>
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Details
+          </mat-panel-title>
+          <mat-panel-description>
+            {{ panelOpenState ? "Hide" : "Show" }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p><mat-icon class="icon" >unfold_more</mat-icon><b>Gravity: </b>{{ planetDetail.population }}</p>
+        <p><mat-icon class="icon" >autorenew</mat-icon><b>Orbital Period: </b> {{ planetDetail.orbital_period }}</p>
+        <p><mat-icon class="icon" >360</mat-icon><b>Rotation Period: </b>{{ planetDetail.rotation_period }}</p>
+        <p><mat-icon class="icon" >block</mat-icon><b>Diameter: </b>{{ planetDetail.diameter }}</p>
+        <p><mat-icon class="icon" >waves</mat-icon><b>Surface Water: </b>{{ planetDetail.surface_water }} %</p>
+        <p><mat-icon class="icon" >terrain</mat-icon><b>Terrain: </b>{{ planetDetail.terrain }}</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <br />
+    <mat-card-content>
+      <p>
+        <b>{{ planetDetail.name }}</b> is an ecumenopolis planet in the
+        fictional Star Wars universe (in the {{ planetDetail.name }} Subsector
+        of the Corusca Sector of the Core Worlds). It first appeared onscreen in
+        the 1997 Special Edition of Return of the Jedi, but was first mentioned
+        in Timothy Zahn's 1991 novel Heir to the Empire.
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>

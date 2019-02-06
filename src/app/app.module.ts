@@ -11,6 +11,7 @@ import { reducers } from "./reducers/reducers";
 //EFECTS
 import { EffectsModule } from "@ngrx/effects";
 import { PlanetsListEffects } from "./effects/planetsList.effects";
+import { PlanetDetailEffects } from "./effects/planetDetail.effects";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -25,12 +26,15 @@ import {
   MatButtonModule,
   MatButtonToggleModule,
   MatTableModule,
+  MatExpansionModule,
+  MatCardModule,
+  MatProgressSpinnerModule
 } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-import { PaginatorService } from "./services/paginator.service";
 import { PlanetsService } from "./services/planets.service";
 import { PlantsListResolver } from "./resolvers/plantsList.resolver";
+import { PlantsDetailResolver } from "./resolvers/plantDetail.resolver";
 import { PlanetDetailComponent } from './planet-detail/planet-detail.component';
 
 @NgModule({
@@ -41,6 +45,9 @@ import { PlanetDetailComponent } from './planet-detail/planet-detail.component';
     MatPaginatorModule,
     MatListModule,
     MatIconModule,
+    MatCardModule,
+    MatExpansionModule,
+    MatProgressSpinnerModule,
     MatInputModule,
     BrowserModule,
     AppRoutingModule,
@@ -48,7 +55,7 @@ import { PlanetDetailComponent } from './planet-detail/planet-detail.component';
     MatTableModule,
     MatButtonModule,
     MatButtonToggleModule,
-    EffectsModule.forRoot([PlanetsListEffects]), // it must be b4 StoreModule.forRoot(...)
+    EffectsModule.forRoot([PlanetsListEffects, PlanetDetailEffects]), // it must be b4 StoreModule.forRoot(...)
     StoreModule.forRoot(reducers), // combined routers
     // Instrumentation must be imported after importing StoreModule (config is optional)
     StoreDevtoolsModule.instrument({
@@ -56,7 +63,7 @@ import { PlanetDetailComponent } from './planet-detail/planet-detail.component';
       logOnly: environment.production // Restrict extension to log-only mode
     })
   ],
-  providers: [PaginatorService, PlanetsService, PlantsListResolver],
+  providers: [PlanetsService, PlantsListResolver, PlantsDetailResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -46,12 +46,17 @@ interface Planets {
 export class PlanetsService {
     planetsURL = 'https://swapi.co/api/planets/';
     queryURL = '?q=';
+    planetDetailURL = 'https://swapi.co/api';
 
     constructor(private http: HttpClient) { }
 
 
     getPlanets(url: string = this.planetsURL) {
         return this.http.get<Planets>(url)
+    }
+
+    getPlanetDetail(urlEnding:string) {
+        return this.http.get<Planet>(`${this.planetDetailURL}${urlEnding}/`)
     }
 
 

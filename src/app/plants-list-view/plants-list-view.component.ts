@@ -1,22 +1,17 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { Router } from "@angular/router";
+import { SelectionModel } from "@angular/cdk/collections";
+
 import { MatPaginator, MatTableDataSource } from "@angular/material";
 
-import { PaginatorService, Paginating } from "../services/paginator.service";
 import { Planet } from "../services/planets.service";
 import { Subject } from "rxjs";
-import {Router} from "@angular/router";
-
-import {SelectionModel} from '@angular/cdk/collections';
-
-
-import {
-  debounceTime,
-  distinctUntilChanged,
-} from "rxjs/operators";
-
-import { FETCH_NEXT_PLANETS_REQUEST } from "../actions/planetsList.actions";
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 
 import { Store, select } from "@ngrx/store";
+import { FETCH_NEXT_PLANETS_REQUEST } from "../actions/planetsList.actions";
+import { SAVE_PLANET } from "../actions/planetDetail.actions";
+
 @Component({
   selector: "app-plants-list-view",
   templateUrl: "./plants-list-view.component.html",
@@ -31,9 +26,8 @@ export class PlantsListViewComponent implements OnInit {
     "orbital_period",
     "rotation_period"
   ];
-  
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  
 
   dataSource: MatTableDataSource<Planet>;
   selection = new SelectionModel<Planet>(false, []);
@@ -62,17 +56,11 @@ export class PlantsListViewComponent implements OnInit {
         .includes(filter.trim().toLocaleLowerCase());
   }
 
-  selectRow(ee){
-    console.log(ee.url)
-
-    const numberPattern = /planets\/\d+/g;
-
-    console.log(ee.url.match( numberPattern ))
-    this.router.navigate(ee.url.match( numberPattern ));
-  }
-  over() {
-    console.log('over')
-    
+  selectRow(planet: Planet) {
+    const numberPattern = /\/planets\/\d+/g;
+    let id = planet.url.match(numberPattern);
+    this.store.dispatch(new SAVE_PLANET({ [id.toString()]: planet }));
+    this.router.navigate(id);
   }
 
   searchPlanet(term: any) {
